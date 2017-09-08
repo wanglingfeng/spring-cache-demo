@@ -25,7 +25,7 @@ public class UserService {
         users.add(new User(3, "cristiano ronaldo"));
     }
     
-    @Cacheable({"users"})
+    @Cacheable(value = {"users"}, unless = "#result == null")
     public User findUser(User user) {
         return findUserInDataBase(user.getId());
     }

@@ -8,9 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @SpringBootApplication
 @EnableCaching
@@ -30,11 +31,19 @@ public class SpringCacheDemoApplication extends SpringBootServletInitializer {
 	@Autowired
 	private UserService userService;
 	
-	@RequestMapping(value = "/{id}")
-	public String get(@PathVariable Integer id) {
+	@GetMapping(value = "/{id}")
+	public Map<String, String> get(@PathVariable Integer id) {
 		User user = new User(id, null);
 		user = userService.findUser(user);
 		
-		return user.getName();
+		Map<String, String> result = new HashMap<>();
+		result.put("name", user.getName());
+		return result;
+	}
+	
+	@PutMapping(value = "/{id}")
+	public void update(@PathVariable Integer id, @RequestParam String name) {
+		User user = new User(id, name);
+		userService.updateUser(user);
 	}
 }

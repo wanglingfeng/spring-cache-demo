@@ -19,7 +19,7 @@ public class SpringCacheDemoApplicationTests {
 	public void contextLoads() {
 	}
 	
-	@Test
+	/*@Test
 	public void testFindUser() throws InterruptedException {
 		// 设置查询条件
 		User user1 = new User(1, null);
@@ -43,5 +43,5 @@ public class SpringCacheDemoApplicationTests {
 		System.out.println(userService.findUser(user1));
 		System.out.println(userService.findUser(user2));
 		System.out.println(userService.findUser(user3));
-	}
+	}*/
 }

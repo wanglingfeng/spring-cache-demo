@@ -10,16 +10,20 @@
         1、peerDiscovery，提供者方式，有两种方式：自动发现(automatic)、手动配置(manual)
         2、rmiUrls，手动方式时提供者的地址，多个的话用|隔开
     -->
-    <cacheManagerPeerProviderFactory
-            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-            properties="peerDiscovery=manual,
-                        hostName=localhost,
-                        port=400001,
-                        socketTimeoutMillis=2000,
-                        rmiUrls=//localhost:400002/users"/>
+    <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=manual, rmiUrls=//localhost:40002/users"/>
 
+    <!--
+    配置监听器
+        1、hostName 主机地址
+        2、port 端口
+        3、socketTimeoutMillis socket子模块的超时时间，默认是2000ms
+    -->
+    <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="hostName=localhost, port=40001, socketTimeoutMillis=2000"/>
+    
     <!-- 默认缓存 -->
-    <defaultCache
+    <!--<defaultCache
             maxEntriesLocalHeap="10000"
             eternal="false"
             timeToIdleSeconds="120"
@@ -27,8 +31,8 @@
             maxEntriesLocalDisk="10000000"
             diskExpiryThreadIntervalSeconds="120"
             memoryStoreEvictionPolicy="LRU">
-        <persistence strategy="localTempSwap"/>
-    </defaultCache>
+        <persistence strategy="distributed"/>
+    </defaultCache>-->
 
     <!--
     ehcache.xml配置参数说明：
@@ -50,8 +54,8 @@
     <cache name="users"
            maxElementsInMemory="1000"
            eternal="false"
-           timeToIdleSeconds="50"
-           timeToLiveSeconds="50"
+           timeToIdleSeconds="100"
+           timeToLiveSeconds="100"
            overflowToDisk="false"
            memoryStoreEvictionPolicy="LRU">
 
@@ -63,12 +67,13 @@
             replicateUpdatesViaCopy 更新之后的对象是否复制到集群中的其他缓存(true);
             replicateRemovals 删除操作是否同步到集群内的其他缓存,默认为true.
         -->
-        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory" 
-                                   properties="replicateAsynchronously=true,
-                                                replicatePuts=true,
-                                                replicateUpdates=true,
-                                                replicateUpdatesViaCopy=true,
-                                                replicateRemovals=true"/>
+        <cacheEventListenerFactory class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=true,
+                            replicatePuts=true,
+                            replicateUpdates=true,
+                            replicateUpdatesViaCopy=true,
+                            replicateRemovals=true "/>
+        
         <!-- 初始化缓存，以及自动设置-->
         <bootstrapCacheLoaderFactory class="net.sf.ehcache.distribution.RMIBootstrapCacheLoaderFactory"/>
     </cache>

@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
         users.add(new User(3, "cristiano ronaldo"));
     }
 
-    @Cacheable(value = {"users"}, unless = "#result == null")
+    @Cacheable(value = {"users"}, key = "#user.getId()", unless = "#result == null")
     @Override
     public User findUser(User user) {
         return findUserInDataBase(user.getId());
@@ -36,14 +36,16 @@ public class UserServiceImpl implements UserService {
 
     @Cacheable(value = "users", condition = "#user.getId() <= 2")
     @Override
-    public User findUserInimit(User user) {
+    public User findUserInCondition(User user) {
         return findUserInDataBase(user.getId());
     }
 
     @CachePut(value = "users", key = "#user.getId()")
     @Override
-    public void updateUser(User user) {
+    public User updateUser(User user) {
         updateUserInDataBase(user);
+        
+        return user;
     }
 
     @CacheEvict(value = "users")
@@ -75,10 +77,12 @@ public class UserServiceImpl implements UserService {
      * @param user
      */
     private void updateUserInDataBase(User user) {
-        users.stream().forEach(u -> {
-            System.out.println("update database " + u + " -> " + user);
-            u.setName(user.getName());
-        });
+        users.stream()
+                .filter(u -> user.getId() == u.getId())
+                .forEach(u -> {
+                    System.out.println("update database " + u + " -> " + user);
+                    u.setName(user.getName());
+                });
     }
 
     /**

@@ -1,2 +1,7 @@
 spring:
   output.ansi.enabled: always
+  
+---
+spring:
+  profiles: prod
+  cache.ehcache.config: classpath:ehcache-prod.xml

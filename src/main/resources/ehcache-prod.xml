@@ -8,10 +8,12 @@
     <!--
     配置提供者
         1、peerDiscovery，提供者方式，有两种方式：自动发现(automatic)、手动配置(manual)
-        2、rmiUrls，手动方式时提供者的地址，多个的话用|隔开
     -->
     <cacheManagerPeerProviderFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
-            properties="peerDiscovery=manual, rmiUrls=//localhost:40002/users"/>
+            properties="peerDiscovery=automatic,
+                        multicastGroupAddress=230.0.0.1,
+                        multicastGroupPort=4446,
+                        timeToLive=32"/>
 
     <!--
     配置监听器
@@ -20,8 +22,8 @@
         3、socketTimeoutMillis socket子模块的超时时间，默认是2000ms
     -->
     <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
-            properties="hostName=localhost, port=40001, socketTimeoutMillis=2000"/>
-    
+                                     properties="hostName=localhost, port=40001, socketTimeoutMillis=2000"/>
+
     <!-- 默认缓存 -->
     <defaultCache
             maxEntriesLocalHeap="10000"

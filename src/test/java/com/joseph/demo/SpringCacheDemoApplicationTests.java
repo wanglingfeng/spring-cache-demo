@@ -1,7 +1,6 @@
-package com.jospeh.demo;
+package com.joseph.demo;
 
-import com.jospeh.demo.service.UserService;
-import com.jospeh.demo.service.domain.User;
+import com.joseph.demo.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

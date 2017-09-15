@@ -1,4 +1,4 @@
-package com.jospeh.demo.service.domain;
+package com.joseph.demo.service.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

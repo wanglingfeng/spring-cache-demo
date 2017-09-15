@@ -21,7 +21,7 @@
         2、port 端口
         3、socketTimeoutMillis socket子模块的超时时间，默认是2000ms
     -->
-    <cacheManagerPeerListenerFactory class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+    <cacheManagerPeerListenerFactory class="com.joseph.demo.ehcache.distribution.CustomRMICacheManagerPeerListenerFactory"
                                      properties="hostName=localhost, port=40001, socketTimeoutMillis=2000"/>
 
     <!-- 默认缓存 -->

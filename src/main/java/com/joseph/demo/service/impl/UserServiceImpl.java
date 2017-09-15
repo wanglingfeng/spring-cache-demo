@@ -1,7 +1,7 @@
-package com.jospeh.demo.service.impl;
+package com.joseph.demo.service.impl;
 
-import com.jospeh.demo.service.UserService;
-import com.jospeh.demo.service.domain.User;
+import com.joseph.demo.service.UserService;
+import com.joseph.demo.service.domain.User;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;

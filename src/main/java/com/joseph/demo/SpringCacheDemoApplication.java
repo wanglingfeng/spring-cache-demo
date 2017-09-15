@@ -1,7 +1,7 @@
-package com.jospeh.demo;
+package com.joseph.demo;
 
-import com.jospeh.demo.service.UserService;
-import com.jospeh.demo.service.domain.User;
+import com.joseph.demo.service.UserService;
+import com.joseph.demo.service.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

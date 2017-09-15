@@ -22,7 +22,6 @@ public class CustomRMICacheManagerPeerListenerFactory extends CacheManagerPeerLi
      */
     public static final Integer DEFAULT_SOCKET_TIMEOUT_MILLIS = 120000;
 
-    private static final String HOSTNAME = "hostName";
     private static final String PORT = "port";
     private static final String REMOTE_OBJECT_PORT = "remoteObjectPort";
     private static final String SOCKET_TIMEOUT_MILLIS = "socketTimeoutMillis";

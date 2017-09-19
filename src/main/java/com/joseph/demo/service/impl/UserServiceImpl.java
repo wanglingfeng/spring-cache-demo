@@ -19,13 +19,15 @@ import java.util.Set;
 public class UserServiceImpl implements UserService {
 
     private Set<User> users;
+    
+    private int id_sequence = 0;
 
     @PostConstruct
     public void init() {
         users = new HashSet<>();
-        users.add(new User(1, "kobe bryant"));
-        users.add(new User(2, "joseph wang"));
-        users.add(new User(3, "cristiano ronaldo"));
+        users.add(new User(++id_sequence, "kobe bryant"));
+        users.add(new User(++id_sequence, "joseph wang"));
+        users.add(new User(++id_sequence, "cristiano ronaldo"));
     }
 
     @Cacheable(value = {"users"}, key = "#user.getId()", unless = "#result == null")
@@ -42,13 +44,21 @@ public class UserServiceImpl implements UserService {
 
     @CachePut(value = "users", key = "#user.getId()")
     @Override
+    public User insertUser(User user) {
+        insertUserInDateBase(user);
+        
+        return user;
+    }
+
+    @CachePut(value = "users", key = "#user.getId()")
+    @Override
     public User updateUser(User user) {
         updateUserInDataBase(user);
         
         return user;
     }
 
-    @CacheEvict(value = "users")
+    @CacheEvict(value = "users", key = "#user.getId()")
     @Override
     public void removeUser(User user) {
         removeUserInDataBase(user.getId());
@@ -73,6 +83,17 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
+     * 模拟数据库插入
+     * @param user
+     */
+    private void insertUserInDateBase(User user) {
+        user.setId(++id_sequence);
+        users.add(user);
+
+        System.out.println("insert datebase -> " + user);
+    }
+    
+    /**
      * 模拟数据库更新
      * @param user
      */
@@ -91,7 +112,10 @@ public class UserServiceImpl implements UserService {
      */
     private void removeUserInDataBase(int id) {
         Optional<User> deleteUserOptional = users.stream().filter(u -> id == u.getId()).findFirst();
-        deleteUserOptional.ifPresent(users::remove);
+        deleteUserOptional.ifPresent(u -> {
+            System.out.println("remove database -> " + u);
+            users.remove(u);
+        });
     }
 
     /**
